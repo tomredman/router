@@ -13,6 +13,7 @@ export const configSchema = z.object({
   disableTypes: z.boolean().optional().default(false),
   addExtensions: z.boolean().optional().default(false),
   disableLogging: z.boolean().optional().default(false),
+  disableManifestGeneration: z.boolean().optional().default(false),
   routeTreeFileHeader: z
     .array(z.string())
     .optional()
@@ -62,6 +63,32 @@ export function getConfig(
       /\.(ts|tsx)$/,
       '.js',
     )
+  }
+
+  // if a configDirectory is used, paths should be relative to that directory
+  if (configDirectory) {
+    // if absolute configDirectory is provided, use it as the root
+    if (path.isAbsolute(configDirectory)) {
+      config.routesDirectory = path.resolve(
+        configDirectory,
+        config.routesDirectory,
+      )
+      config.generatedRouteTree = path.resolve(
+        configDirectory,
+        config.generatedRouteTree,
+      )
+    } else {
+      config.routesDirectory = path.resolve(
+        process.cwd(),
+        configDirectory,
+        config.routesDirectory,
+      )
+      config.generatedRouteTree = path.resolve(
+        process.cwd(),
+        configDirectory,
+        config.generatedRouteTree,
+      )
+    }
   }
 
   return config

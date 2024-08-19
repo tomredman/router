@@ -3,7 +3,6 @@ import warning from 'tiny-warning'
 import { CatchBoundary, ErrorComponent } from './CatchBoundary'
 import { useRouterState } from './useRouterState'
 import { useRouter } from './useRouter'
-import { type AnyRouter, type RegisteredRouter } from './router'
 import { Transitioner } from './Transitioner'
 import {
   type AnyRoute,
@@ -13,6 +12,7 @@ import {
 import { matchContext } from './matchContext'
 import { Match } from './Match'
 import { SafeFragment } from './SafeFragment'
+import type { AnyRouter, RegisteredRouter } from './router'
 import type { ResolveRelativePath, ToOptions } from './link'
 import type {
   AllContext,
@@ -109,15 +109,11 @@ export function Matches() {
     <router.options.defaultPendingComponent />
   ) : null
 
-  const ResolvedSuspense = !router.state.matches.length
-    ? React.Suspense
-    : SafeFragment
-
   const inner = (
-    <ResolvedSuspense fallback={pendingElement}>
+    <React.Suspense fallback={pendingElement}>
       <Transitioner />
       <MatchesInner />
-    </ResolvedSuspense>
+    </React.Suspense>
   )
 
   return router.options.InnerWrap ? (
