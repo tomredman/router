@@ -626,7 +626,10 @@ function tsrFileRouter(opts: {
       toPath(src: string): string {
         const inputPath = vinxiFsRouterCleanPath(src, this.config)
 
-        const segments = startAPIRouteSegmentsFromTSRFilePath(inputPath)
+        const segments = startAPIRouteSegmentsFromTSRFilePath(
+          inputPath,
+          tsrConfig,
+        )
 
         const pathname = segments
           .map((part) => {
