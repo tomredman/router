@@ -80,6 +80,7 @@ export {
   useMatches,
   useParentMatches,
   useChildMatches,
+  isMatch,
 } from './Matches'
 export type {
   RouteMatch,
@@ -138,6 +139,7 @@ export {
 } from './route'
 export type {
   AnyPathParams,
+  ResolveParams,
   SearchSchemaInput,
   SearchValidatorAdapter,
   AnySearchSchema,
@@ -214,7 +216,6 @@ export type {
   RouterContextOptions,
   TrailingSlashOption,
   RouterOptions,
-  RouterTransformer,
   RouterErrorSerializer,
   RouterState,
   ListenerFn,
@@ -227,6 +228,8 @@ export type {
   RouterEvent,
   RouterListener,
   AnyRouterWithContext,
+  ExtractedEntry,
+  StreamState,
 } from './router'
 
 export { RouterProvider, RouterContextProvider } from './RouterProvider'
@@ -253,6 +256,9 @@ export {
   stringifySearchWith,
 } from './searchParams'
 export type { SearchSerializer, SearchParser } from './searchParams'
+
+export { defaultTransformer } from './transformer'
+export type { RouterTransformer } from './transformer'
 
 export { useBlocker, Block } from './useBlocker'
 

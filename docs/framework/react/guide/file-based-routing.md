@@ -1,5 +1,5 @@
 ---
-title: File-Based Routes
+title: File-Based Routing
 ---
 
 Most of the TanStack Router documentation is written for file-based routing. This guide is mostly intended to help you understand in more detail how to configure file-based routing and the technical details behind how it works.
@@ -201,10 +201,19 @@ The following options are available for configuration via the `tsr.config.json` 
   - (Required) The directory containing the routes relative to the cwd.
 - **`generatedRouteTree`**
   - (Required) The path to the file where the generated route tree will be saved, relative to the cwd.
+- **`autoCodeSplitting`**
+
+  - (Optional, **Defaults to `false`**)
+  - If set to `true`, all non-critical route configuration items will be automatically code-split.
+  - See the [using automatic code-splitting](./code-splitting.md#using-automatic-code-splitting) guide.
+
 - **`quoteStyle`**
   - (Optional, **Defaults to `single`**) whether to use `single` or `double` quotes when formatting the generated route tree file.`
 - **`semicolons`**
   - (Optional, **Defaults to `false`**) whether to use semicolons in the generated route tree file.
+- **`apiBase`**
+  - (Optional) The base path for API routes. Defaults to `/api`.
+  - This option is reserved for future use by the TanStack Start for API routes.
 - **`disableTypes`**
   - (Optional, **Defaults to `false`**) whether to disable generating types for the route tree
   - If set to `true`, the generated route tree will not include any types.
@@ -213,8 +222,6 @@ The following options are available for configuration via the `tsr.config.json` 
   - (Optional, **Defaults to `false`**) add file extensions to the route names in the generated route tree
 - **`disableLogging`**
   - (Optional, **Defaults to `false`**) disables logging for the route generation process
-- **`disableManifestGeneration**
-  - (Optional, **Defaults to `false`**) disables generating the route tree manifest
 - **`routeTreeFileHeader`**
 
   - (Optional) An array of strings to prepend to the generated route tree file content.
@@ -236,14 +243,15 @@ The following options are available for configuration via the `tsr.config.json` 
       '/* prettier-ignore-end */'
     ]
     ```
-- **`experimental.enableCodeSplitting`** ⚠️
-  - (Optional, **Defaults to `false`**)
-  - If set to `true`, all non-critical route configuration items will be automatically code-split.
-  - See the [using automatic code-splitting](./code-splitting.md#using-automatic-code-splitting) guide.
+- **`disableManifestGeneration**
+  - (Optional, **Defaults to `false`**) disables generating the route tree manifest
 
 ## File Naming Conventions
 
 File-based routing requires that you follow a few simple file naming conventions to ensure that your routes are generated correctly. The concepts these conventions enable are covered in detail in the [Route Trees & Nesting](./route-trees.md) guide.
+
+> [!IMPORTANT]
+> Routes starting with `/api` are reserved and cannot not be used for file-based routing. These routes are reserved for future use by the TanStack Start for API routes. If you need to use routes starting with `/api` when using TanStack Router with file-based routing, then you'll need to configure the `apiBase` option to a different value.
 
 > **💡 Remember:** The file-naming conventions for your project could be affected by what [options](#options) are configured in your `tsr.config.json`. By default, the `routeFileIgnorePrefix` option is set to `-`, as such files and directories starting with `-` will not be considered for routing.
 
